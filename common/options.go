@@ -7,6 +7,7 @@ import (
 // ServerOptions describe available options to init server
 type ServerOptions struct {
 	EnableGitlab bool
+	GitlabTokens []string
 	Host         string
 	Port         string
 }

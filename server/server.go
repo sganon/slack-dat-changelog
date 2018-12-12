@@ -28,6 +28,7 @@ func New(so common.ServerOptions) *Server {
 
 	if so.EnableGitlab {
 		gitlabRouter = gitlab.Routes()
+		gitlabRouter = gitlab.NewMiddleware(gitlabRouter, so.GitlabTokens)
 	}
 
 	handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

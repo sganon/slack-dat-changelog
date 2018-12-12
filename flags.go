@@ -36,3 +36,9 @@ var serverPortFlag = cli.StringFlag{
 	Value: "8080",
 	Usage: "Set server port",
 }
+
+var gitlabTokensFlag = cli.StringSliceFlag{
+	Name:   "gitlabtokens",
+	Usage:  "Pass wb hooks token defined in gitlab",
+	EnvVar: "SLDC_GITLAB_TOKENS",
+}

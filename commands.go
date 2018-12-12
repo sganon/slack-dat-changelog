@@ -15,12 +15,14 @@ var serveCommand = cli.Command{
 	Flags: []cli.Flag{
 		disableGitlabFlag,
 		serverHostFlag, serverPortFlag,
+		gitlabTokensFlag,
 	},
 
 	Action: func(c *cli.Context) (err error) {
 		log.Debugln("Starting server..")
 		so := common.ServerOptions{
 			EnableGitlab: !c.Bool(disableGitlabFlag.GetName()),
+			GitlabTokens: c.StringSlice(gitlabTokensFlag.GetName()),
 			Host:         c.String(serverHostFlag.GetName()),
 			Port:         c.String(serverPortFlag.GetName()),
 		}
