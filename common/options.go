@@ -6,11 +6,12 @@ import (
 
 // ServerOptions describe available options to init server
 type ServerOptions struct {
-	EnableGitlab bool
-	GitlabTokens []string
-	SlackURI     string
-	Host         string
-	Port         string
+	EnableGitlab      bool
+	GitlabTokens      []string
+	GitlabAccessToken string
+	SlackURI          string
+	Host              string
+	Port              string
 }
 
 func (so ServerOptions) log(level log.Level) {

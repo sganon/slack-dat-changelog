@@ -15,18 +15,19 @@ var serveCommand = cli.Command{
 	Flags: []cli.Flag{
 		disableGitlabFlag,
 		serverHostFlag, serverPortFlag,
-		gitlabTokensFlag,
+		gitlabTokensFlag, gitlabAccessTokenFlag,
 		slackURIFlag,
 	},
 
 	Action: func(c *cli.Context) (err error) {
 		log.Debugln("Starting server..")
 		so := common.ServerOptions{
-			EnableGitlab: !c.Bool(disableGitlabFlag.GetName()),
-			GitlabTokens: c.StringSlice(gitlabTokensFlag.GetName()),
-			SlackURI:     c.String(slackURIFlag.GetName()),
-			Host:         c.String(serverHostFlag.GetName()),
-			Port:         c.String(serverPortFlag.GetName()),
+			EnableGitlab:      !c.Bool(disableGitlabFlag.GetName()),
+			GitlabTokens:      c.StringSlice(gitlabTokensFlag.GetName()),
+			GitlabAccessToken: c.String(gitlabAccessTokenFlag.GetName()),
+			SlackURI:          c.String(slackURIFlag.GetName()),
+			Host:              c.String(serverHostFlag.GetName()),
+			Port:              c.String(serverPortFlag.GetName()),
 		}
 		so.Info()
 		server := server.New(so)

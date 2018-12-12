@@ -31,6 +31,12 @@ var disableGitlabFlag = cli.BoolFlag{
 	Usage: "Disable gitlab routes",
 }
 
+var gitlabAccessTokenFlag = cli.StringFlag{
+	Name:   "gitlabtoken",
+	Usage:  "Gitlab personal access token",
+	EnvVar: "SLDC_GITLAB_TOKEN",
+}
+
 var serverHostFlag = cli.StringFlag{
 	Name:  "host",
 	Value: "0.0.0.0",

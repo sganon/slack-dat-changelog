@@ -41,15 +41,15 @@ func New(webHookURL, channel string) *Client {
 func (c Client) SendMessage(payload Payload) (err error) {
 	b, err := json.Marshal(payload)
 	if err != nil {
-		return fmt.Errorf("error in send messag: %v", err)
+		return fmt.Errorf("error in send message: %v", err)
 	}
 	req, err := http.NewRequest("POST", c.webHookURL, bytes.NewBuffer(b))
 	if err != nil {
-		return fmt.Errorf("error in send messag: %v", err)
+		return fmt.Errorf("error in send message: %v", err)
 	}
 	res, err := c.client.Do(req)
 	if err != nil {
-		return fmt.Errorf("error in send messag: %v", err)
+		return fmt.Errorf("error in send message: %v", err)
 	}
 	if res.StatusCode != http.StatusOK {
 		return fmt.Errorf("slack webhook returned %d instead of 200", res.StatusCode)
