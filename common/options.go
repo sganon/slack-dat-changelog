@@ -8,6 +8,7 @@ import (
 type ServerOptions struct {
 	EnableGitlab bool
 	GitlabTokens []string
+	SlackURI     string
 	Host         string
 	Port         string
 }

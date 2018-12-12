@@ -16,6 +16,7 @@ var serveCommand = cli.Command{
 		disableGitlabFlag,
 		serverHostFlag, serverPortFlag,
 		gitlabTokensFlag,
+		slackURIFlag,
 	},
 
 	Action: func(c *cli.Context) (err error) {
@@ -23,6 +24,7 @@ var serveCommand = cli.Command{
 		so := common.ServerOptions{
 			EnableGitlab: !c.Bool(disableGitlabFlag.GetName()),
 			GitlabTokens: c.StringSlice(gitlabTokensFlag.GetName()),
+			SlackURI:     c.String(slackURIFlag.GetName()),
 			Host:         c.String(serverHostFlag.GetName()),
 			Port:         c.String(serverPortFlag.GetName()),
 		}

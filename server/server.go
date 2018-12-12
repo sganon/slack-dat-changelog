@@ -27,7 +27,7 @@ func New(so common.ServerOptions) *Server {
 	var gitlabRouter http.Handler
 
 	if so.EnableGitlab {
-		gitlabRouter = gitlab.Routes()
+		gitlabRouter = gitlab.Routes(so.SlackURI)
 		gitlabRouter = gitlab.NewMiddleware(gitlabRouter, so.GitlabTokens)
 	}
 

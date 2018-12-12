@@ -18,6 +18,12 @@ var debugFlag = cli.BoolFlag{
 	Usage: "Set logging level to debug",
 }
 
+var slackURIFlag = cli.StringFlag{
+	Name:   "slackURI",
+	Usage:  "Set slack webhook uri",
+	EnvVar: "SLDC_SLACK_URI",
+}
+
 // Command  serve flags
 
 var disableGitlabFlag = cli.BoolFlag{
