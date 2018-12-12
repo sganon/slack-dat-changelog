@@ -17,4 +17,5 @@ services:
         max-file: "3"
     environment:
       - SLDC_GITLAB_TOKENS=$SLDC_GITLAB_TOKENS
+      - SLDC_GITLAB_TOKEN=$SLDC_GITLAB_TOKEN
       - SLDC_SLACK_URI=$SLDC_SLACK_URI

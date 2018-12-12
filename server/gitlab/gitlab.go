@@ -50,7 +50,7 @@ func (h handler) handleWebHook(w http.ResponseWriter, r *http.Request, _ httprou
 	}
 	log.WithFields(logFields).Debugln("Processing tag hook")
 
-	changelog, err := h.gitlab.GetRawFile(body.Project.WebURL, "CHANGELOG.md")
+	_, err = h.gitlab.GetRawFile(body.Project.WebURL, "CHANGELOG.md")
 	if err != nil {
 		log.Error(fmt.Errorf("error in handleWebHook: %v", err))
 		common.JSONResponse(w, http.StatusInternalServerError, common.BaseError{
