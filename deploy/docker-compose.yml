@@ -1,0 +1,18 @@
+version: '2'
+
+networks:
+  caddy:
+    external:
+      name: caddy
+
+services:
+  slack-dat-changelog:
+    build: .
+    container_name: slack-dat-changelog
+    networks:
+      - caddy
+    logging:
+      options:
+        max-size: 50m
+        max-file: "3"
+
