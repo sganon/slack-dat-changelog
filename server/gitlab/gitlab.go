@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/julienschmidt/httprouter"
 	log "github.com/sirupsen/logrus"
@@ -50,28 +51,17 @@ func (h handler) handleWebHook(w http.ResponseWriter, r *http.Request, _ httprou
 	}
 	log.WithFields(logFields).Debugln("Processing tag hook")
 
-	_, err = h.gitlab.GetRawFile(body.Project.WebURL, "CHANGELOG.md")
+	content, err := h.gitlab.GetRawFile(body.Project.WebURL, "CHANGELOG.md")
 	if err != nil {
 		log.Error(fmt.Errorf("error in handleWebHook: %v", err))
 		common.JSONResponse(w, http.StatusInternalServerError, common.BaseError{
 			Message: "an unexpected error occured fetching changelog",
 		})
 	}
-	// fmt.Println(string(changelog))
+	splitedRef := strings.Split(body.Ref, "/")
+	version := splitedRef[len(splitedRef)-1]
+	changelog := ParseChangelog(content, version)
+	changelog.Project = body.Project.Name
 
-	h.slack.SendMessage(slack.Payload{
-		Attachments: []slack.Attachment{
-			{
-				Fallback: fmt.Sprintf("New release of project %d", body.ProjectID),
-				Pretext:  fmt.Sprintf("New release of project %d", body.ProjectID),
-				Color:    "good",
-				Fields: []slack.Field{
-					{
-						Title: "Added",
-						Value: "First changelog",
-					},
-				},
-			},
-		},
-	})
+	h.slack.SendMessage(changelog.GeneratePayload())
 }
