@@ -94,9 +94,11 @@ func (c Changelog) GeneratePayload() (payload slack.Payload) {
 		added := getField("Added", c.Added)
 		changed := getField("Changed", c.Changed)
 		removed := getField("Removed", c.Removed)
-		Fields = append(Fields, added...)
-		Fields = append(Fields, changed...)
-		Fields = append(Fields, removed...)
+		Fields = []slack.Field{
+			added,
+			changed,
+			removed,
+		}
 	}
 	payload.Attachments = []slack.Attachment{
 		{
@@ -109,12 +111,11 @@ func (c Changelog) GeneratePayload() (payload slack.Payload) {
 	return payload
 }
 
-func getField(kind string, values []string) (fields []slack.Field) {
+func getField(kind string, values []string) (field slack.Field) {
+	field.Title = kind
 	for _, v := range values {
-		fields = append(fields, slack.Field{
-			Title: kind,
-			Value: v,
-		})
+		v = strings.Replace(v, "\n", " ", -1)
+		field.Value += fmt.Sprintf("• %s\n", v)
 	}
-	return fields
+	return field
 }
